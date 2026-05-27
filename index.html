@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CODEK Training · Centro de alto rendimiento · Alcobendas</title>
+<meta name="description" content="Entrenamiento funcional, calistenia y fuerza en Alcobendas. Grupos reducidos, racks personales y metodología científica. Reserva tu clase de prueba gratis.">
+<meta name="theme-color" content="#0a0a0a">
+<meta property="og:title" content="CODEK Training · Alcobendas">
+<meta property="og:description" content="Entrenamiento funcional y de fuerza con metodología científica. Reserva tu clase de prueba gratis.">
+<meta property="og:type" content="website">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:#0a0a0a;color:#ededed;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,10,10,0.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid #1f1f1f;
+}
+.hdr{
+  max-width:1080px;margin:0 auto;padding:14px 20px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.brand{font-size:22px;font-weight:900;color:#B23A3A;letter-spacing:3px;line-height:1}
+.brand .sub{display:block;font-size:9px;font-weight:700;letter-spacing:6px;color:#888;margin-top:3px}
+.hdr-actions{display:flex;align-items:center;gap:10px}
+.hdr-icon{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid #2a2a2a;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  transition:all .15s;background:#141414;
+}
+.hdr-icon:hover{border-color:#B23A3A;background:#1c1010}
+.ig-svg,.wa-svg{width:18px;height:18px;color:#fff;display:block}
+.hdr-icon:hover .ig-svg,.hdr-icon:hover .wa-svg{color:#B23A3A}
+.btn-wa .wa-svg{width:18px;height:18px;color:#0a0a0a}
+.footer-links svg{width:14px;height:14px;color:inherit;vertical-align:-2px;margin-right:4px}
+
+.hero{
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:30px 20px 36px;
+  max-width:760px;margin:0 auto;
+  text-align:center;
+}
+.hero-tag{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:3px;color:#B23A3A;
+  text-transform:uppercase;margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(28px,7vw,46px);
+  font-weight:900;line-height:1.05;letter-spacing:-0.5px;
+  margin-bottom:14px;color:#fff;
+}
+.hero h1 .accent{color:#B23A3A;display:block}
+.hero p{
+  font-size:clamp(14px,3.6vw,17px);
+  color:#bbb;max-width:520px;margin:0 auto 32px;
+}
+
+.opciones{display:flex;flex-direction:column;gap:12px;max-width:480px;margin:0 auto;width:100%}
+.opciones button{
+  background:#141414;border:1.5px solid #2a2a2a;border-radius:14px;
+  padding:18px 18px;cursor:pointer;text-align:left;
+  display:flex;align-items:center;gap:16px;
+  font-family:inherit;color:#fff;width:100%;
+  transition:transform .12s,border-color .15s,background .15s;
+}
+.opciones button:hover:not(:disabled){border-color:#B23A3A;background:#1a1212;transform:translateY(-1px)}
+.opciones button:active:not(:disabled){transform:translateY(0) scale(.99)}
+.opciones button:disabled{opacity:.45;cursor:default}
+.opciones .emo{font-size:30px;flex-shrink:0;width:44px;text-align:center;line-height:1}
+.opciones .body{flex:1;min-width:0}
+.opciones .txt{display:block;font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;line-height:1.2}
+.opciones .sub{display:block;font-size:12px;color:#999;font-weight:400;line-height:1.4}
+.opciones .arrow{color:#666;font-size:18px;flex-shrink:0}
+.opciones button:hover .arrow{color:#B23A3A}
+
+#cargando{display:none;text-align:center;color:#777;font-size:12px;padding:14px 0 0}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid #333;border-top-color:#B23A3A;border-radius:50%;animation:sp 0.7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.hero-more{
+  margin-top:32px;padding:16px 18px;
+  background:#0f0f0f;border:1px solid #1f1f1f;border-radius:12px;
+  text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;
+  flex-wrap:wrap;
+}
+.hero-more-arrow{
+  display:inline-block;font-size:18px;color:#B23A3A;font-weight:900;
+  animation:bob 2.2s ease-in-out infinite;
+}
+.hero-more-text{
+  font-size:13px;color:#bbb;line-height:1.4;
+}
+.hero-more-text b{color:#fff;font-weight:700}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+section{padding:70px 20px;max-width:1080px;margin:0 auto}
+.section-tag{
+  display:block;font-size:11px;font-weight:700;letter-spacing:3px;color:#B23A3A;
+  text-transform:uppercase;margin-bottom:10px;text-align:center;
+}
+.section-title{
+  font-size:clamp(24px,5vw,34px);font-weight:900;color:#fff;line-height:1.1;
+  text-align:center;margin-bottom:14px;letter-spacing:-0.5px;
+}
+.section-sub{
+  font-size:15px;color:#aaa;max-width:600px;margin:0 auto 40px;text-align:center;
+}
+
+.pilares{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pilar{
+  background:#141414;border:1px solid #222;border-radius:14px;
+  padding:24px 20px;text-align:left;transition:border-color .15s,transform .15s;
+}
+.pilar:hover{border-color:#3a2020;transform:translateY(-3px)}
+.pilar .ico{font-size:32px;margin-bottom:14px;display:block;line-height:1}
+.pilar h3{font-size:15px;font-weight:800;color:#B23A3A;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.pilar p{font-size:13px;color:#aaa;line-height:1.55}
+
+.tarifas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:18px}
+.plan{
+  background:#141414;border:1.5px solid #222;border-radius:16px;padding:24px 20px;
+  display:flex;flex-direction:column;position:relative;
+  transition:border-color .15s,transform .15s;
+}
+.plan:hover{border-color:#3a2020;transform:translateY(-3px)}
+.plan.destacado{border-color:#B23A3A;background:linear-gradient(180deg,#1a0e10 0%,#141414 60%)}
+.plan .badge-pop{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  background:#B23A3A;color:#fff;font-size:10px;font-weight:800;letter-spacing:2px;
+  padding:5px 12px;border-radius:10px;text-transform:uppercase;
+}
+.plan h3{font-size:14px;font-weight:700;color:#888;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.plan .precio{font-size:38px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1px;margin-bottom:4px}
+.plan .precio small{font-size:14px;font-weight:600;color:#888;margin-left:4px}
+.plan .nombre{font-size:13px;color:#B23A3A;font-weight:700;margin-bottom:18px;letter-spacing:0.5px}
+.plan ul{list-style:none;flex:1;margin-bottom:0}
+.plan li{font-size:13px;color:#ccc;padding:5px 0 5px 22px;position:relative;line-height:1.5}
+.plan li:before{content:'✓';position:absolute;left:0;top:5px;color:#B23A3A;font-weight:800}
+.tarifas-nota{font-size:13px;color:#999;text-align:center;font-style:italic;margin-top:8px}
+
+.personal{
+  background:linear-gradient(135deg,#1a1a1a,#0f0f0f);border:1px solid #2a2a2a;
+  border-radius:18px;padding:36px 28px;text-align:center;margin-top:30px;
+}
+.personal h3{font-size:13px;font-weight:700;color:#B23A3A;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px}
+.personal h4{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.2}
+.personal p{font-size:14px;color:#aaa;max-width:480px;margin:0 auto 22px}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#25d366;color:#0a0a0a;font-weight:700;font-size:14px;
+  padding:14px 24px;border-radius:50px;border:none;cursor:pointer;
+  text-decoration:none;transition:transform .12s,box-shadow .15s;
+}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,0.25)}
+.btn-wa .wa-ico{font-size:18px;line-height:1}
+
+.horarios{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;
+}
+.dia{
+  background:#141414;border:1px solid #222;border-radius:12px;
+  padding:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.dia .lab{font-size:13px;font-weight:700;color:#888;letter-spacing:2px;text-transform:uppercase}
+.dia .hor{font-size:15px;font-weight:700;color:#fff}
+.dia.cerrado .hor{color:#555}
+
+.ubic-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.ubic-card{
+  background:#141414;border:1px solid #222;border-radius:14px;padding:24px;
+}
+.ubic-card h3{font-size:12px;font-weight:700;color:#B23A3A;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+.ubic-card .addr{font-size:17px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:6px}
+.ubic-card .cp{font-size:14px;color:#aaa;margin-bottom:18px}
+.ubic-card .btn-map{
+  display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
+  color:#B23A3A;border:1.5px solid #B23A3A;padding:10px 16px;border-radius:8px;
+  transition:all .15s;
+}
+.ubic-card .btn-map:hover{background:#B23A3A;color:#fff}
+.mapa-frame{
+  width:100%;height:280px;border:0;border-radius:14px;
+  filter:grayscale(0.4) contrast(1.1) brightness(0.85);
+}
+
+footer{
+  background:#070707;border-top:1px solid #1a1a1a;padding:40px 20px 30px;
+  text-align:center;margin-top:30px;
+}
+.footer-brand{font-size:18px;font-weight:900;color:#B23A3A;letter-spacing:3px;margin-bottom:14px}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:18px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:#bbb;display:inline-flex;align-items:center;gap:6px;transition:color .15s}
+.footer-links a:hover{color:#B23A3A}
+.footer-copy{font-size:11px;color:#555;letter-spacing:1px}
+
+@media(min-width:768px){
+  .ubic-grid{grid-template-columns:1fr 1.2fr}
+  .hero{padding-top:60px}
+  .opciones{max-width:520px}
+}
+@media(min-width:1024px){
+  .tarifas{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:380px){
+  .opciones .emo{font-size:26px;width:38px}
+  .opciones .txt{font-size:14px}
+  .plan{padding:20px 16px}
+  .plan .precio{font-size:32px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <a href="#" class="brand">CODEK<span class="sub">TRAINING</span></a>
+    <div class="hdr-actions">
+      <a class="hdr-icon" href="https://instagram.com/codektraining" target="_blank" title="Instagram" aria-label="Instagram"><svg class="ig-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.311 3.608-.975.975-2.242 1.249-3.608 1.311-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.311-.975-.975-1.249-2.242-1.311-3.608-.058-1.266-.069-1.646-.069-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.311-3.608.975-.975 2.242-1.249 3.608-1.311 1.266-.058 1.646-.069 4.85-.069zm0 1.802c-3.15 0-3.521.012-4.762.069-1.244.057-1.972.262-2.435.435-.61.235-1.043.515-1.5.972s-.737.89-.972 1.5c-.173.463-.378 1.191-.435 2.435-.057 1.241-.07 1.612-.07 4.762s.012 3.521.07 4.762c.057 1.244.262 1.972.435 2.435.235.61.515 1.043.972 1.5s.89.737 1.5.972c.463.173 1.191.378 2.435.435 1.241.057 1.612.069 4.762.069s3.521-.012 4.762-.069c1.244-.057 1.972-.262 2.435-.435.61-.235 1.043-.515 1.5-.972s.737-.89.972-1.5c.173-.463.378-1.191.435-2.435.057-1.241.069-1.612.069-4.762s-.012-3.521-.069-4.762c-.057-1.244-.262-1.972-.435-2.435-.235-.61-.515-1.043-.972-1.5s-.89-.737-1.5-.972c-.463-.173-1.191-.378-2.435-.435C15.521 3.977 15.15 3.965 12 3.965zm0 3.063A4.972 4.972 0 1 0 12 17a4.972 4.972 0 0 0 0-9.972zm0 8.197A3.225 3.225 0 1 1 12 8.776a3.225 3.225 0 0 1 0 6.449zm5.388-8.4a1.16 1.16 0 1 0 0-2.323 1.16 1.16 0 0 0 0 2.323z"/></svg></a>
+      <a class="hdr-icon" id="hdrWA" href="https://wa.me/34681806949?text=Hola%21+Me+gustar%C3%ADa+m%C3%A1s+informaci%C3%B3n+sobre+CODEK." target="_blank" title="WhatsApp" aria-label="WhatsApp"><svg class="wa-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.465 3.488"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <span class="hero-tag">Alcobendas · Madrid</span>
+  <h1>Domina tu cuerpo.<br><span class="accent">Transforma tu mente.</span></h1>
+  <p>Funcional, calistenia y fuerza con metodología científica. Grupos reducidos y racks personales.</p>
+
+  <div class="opciones" id="formulario">
+    <button type="button" onclick="elegir('llamar')">
+      <span class="emo">📞</span>
+      <div class="body">
+        <span class="txt">Que me llamen</span>
+        <span class="sub">Te llamamos cuando te venga bien.</span>
+      </div>
+      <span class="arrow">→</span>
+    </button>
+    <button type="button" onclick="elegir('reservar')">
+      <span class="emo">📅</span>
+      <div class="body">
+        <span class="txt">Reservar clase de prueba</span>
+        <span class="sub">Ven a probar el centro gratis.</span>
+      </div>
+      <span class="arrow">→</span>
+    </button>
+    <button type="button" onclick="elegir('info')">
+      <span class="emo">💬</span>
+      <div class="body">
+        <span class="txt">Más info por WhatsApp</span>
+        <span class="sub">Te mandamos detalles personalizados.</span>
+      </div>
+      <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <div id="cargando"><span class="spinner"></span>Enviando…</div>
+  <div class="hero-more">
+    <span class="hero-more-arrow">↓</span>
+    <span class="hero-more-text">Sigue leyendo: <b>metodología</b>, <b>tarifas</b>, <b>horarios</b> y <b>ubicación</b></span>
+  </div>
+</div>
+
+<section id="metodologia">
+  <span class="section-tag">Nuestra filosofía</span>
+  <h2 class="section-title">Metodología CODEK</h2>
+  <p class="section-sub">Entrenamos con enfoque funcional y progresivo, adaptado a todos los niveles. Mejora tu condición física, gana control sobre tu cuerpo y evoluciona de forma medible y segura.</p>
+  <div class="pilares">
+    <div class="pilar">
+      <span class="ico">🏋️</span>
+      <h3>Funcional</h3>
+      <p>Entrenamiento transferible a tu vida diaria y deportiva. Mejora tu fuerza, movilidad y resistencia con sesiones que tienen sentido.</p>
+    </div>
+    <div class="pilar">
+      <span class="ico">🤸</span>
+      <h3>Calistenia</h3>
+      <p>Dominadas, paralelas, anillas y control total del cuerpo. Aprende a dominar tu peso corporal con progresiones claras.</p>
+    </div>
+    <div class="pilar">
+      <span class="ico">💪</span>
+      <h3>Fuerza</h3>
+      <p>Halterofilia y rack con programación y técnica correcta. Tabla personalizada y mediciones periódicas para que avances de verdad.</p>
+    </div>
+    <div class="pilar">
+      <span class="ico">👥</span>
+      <h3>Comunidad</h3>
+      <p>Grupos reducidos (máximo 12 por clase) y entrenadores siempre presentes. La diferencia entre entrenar solo y entrenar bien.</p>
+    </div>
+  </div>
+</section>
+
+<section id="tarifas" style="background:#070707;max-width:none;padding:70px 20px">
+  <div style="max-width:1080px;margin:0 auto">
+    <span class="section-tag">Planes</span>
+    <h2 class="section-title">Elige cómo entrenar</h2>
+    <p class="section-sub">Todos los planes incluyen evaluación inicial, mediciones y seguimiento. Combinables si necesitas algo a medida.</p>
+
+    <div class="tarifas">
+
+      <div class="plan">
+        <h3>Solo RACK</h3>
+        <div class="precio">60€<small>/mes</small></div>
+        <div class="nombre">Entrenamiento libre</div>
+        <ul>
+          <li>1 hora al día, todos los días que abrimos</li>
+          <li>Tabla personalizada a tus objetivos</li>
+          <li>Espacio y material para ti solo/a</li>
+          <li>Evaluación inicial y mediciones</li>
+        </ul>
+      </div>
+
+      <div class="plan">
+        <h3>Plan Base</h3>
+        <div class="precio">85€<small>/mes</small></div>
+        <div class="nombre">2 clases dirigidas/semana</div>
+        <ul>
+          <li>8 clases al mes (funcional o calistenia)</li>
+          <li>Grupos reducidos (máx. 12 personas)</li>
+          <li>Entrenadores profesionales en cada sesión</li>
+          <li>Evaluación inicial y mediciones</li>
+        </ul>
+      </div>
+
+      <div class="plan destacado">
+        <span class="badge-pop">Más contratado</span>
+        <h3>Mix Pro</h3>
+        <div class="precio">95€<small>/mes</small></div>
+        <div class="nombre">3 clases + 1 RACK/sem</div>
+        <ul>
+          <li>12 clases al mes (funcional o calistenia)</li>
+          <li>4 RACKs al mes con tabla personalizada</li>
+          <li>Combinación ideal: grupo + entreno libre</li>
+          <li>Evaluación inicial y seguimiento mensual</li>
+        </ul>
+      </div>
+
+      <div class="plan">
+        <h3>Sin Límites</h3>
+        <div class="precio">110€<small>/mes</small></div>
+        <div class="nombre">Clases + RACK ilimitados</div>
+        <ul>
+          <li>Todas las clases que quieras</li>
+          <li>RACK libre todos los días</li>
+          <li>Tabla personalizada + evaluación</li>
+          <li>Para quien quiere entrenar todos los días</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="tarifas-nota">¿Necesitas otra combinación? Pregúntanos por WhatsApp y te montamos el plan a tu medida.</p>
+
+    <div class="personal">
+      <h3>Servicio premium</h3>
+      <h4>Entrenamiento personal 1-on-1</h4>
+      <p>Sesiones individuales con tu entrenador, programación 100% personalizada y seguimiento dedicado. Para objetivos concretos o quien busca máxima atención.</p>
+      <a class="btn-wa" href="https://wa.me/34681806949?text=Hola%21+Me+gustar%C3%ADa+m%C3%A1s+informaci%C3%B3n+sobre+el+entrenamiento+personal." target="_blank">
+        <svg class="wa-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.465 3.488"/></svg> Solicitar información
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="horarios">
+  <span class="section-tag">Horarios</span>
+  <h2 class="section-title">Cuándo entrenar</h2>
+  <p class="section-sub">Horario amplio entre semana para que encaje con tu vida. Sábados, dos clases dirigidas por la mañana.</p>
+  <div class="horarios">
+    <div class="dia">
+      <span class="lab">Lun – Vie</span>
+      <span class="hor">7:00 – 22:00</span>
+    </div>
+    <div class="dia">
+      <span class="lab">Sábado</span>
+      <span class="hor">Clases 10:00 y 11:00</span>
+    </div>
+    <div class="dia cerrado">
+      <span class="lab">Domingo</span>
+      <span class="hor">Cerrado</span>
+    </div>
+  </div>
+</section>
+
+<section id="ubicacion" style="background:#070707;max-width:none;padding:70px 20px">
+  <div style="max-width:1080px;margin:0 auto">
+    <span class="section-tag">Dónde estamos</span>
+    <h2 class="section-title">Te esperamos en Alcobendas</h2>
+    <p class="section-sub">Polígono industrial, fácil acceso en coche con aparcamiento. A pocos minutos de cualquier punto del norte de Madrid.</p>
+    <div class="ubic-grid">
+      <div class="ubic-card">
+        <h3>Dirección</h3>
+        <div class="addr">Calle de la Metalurgia, 8<br>(posterior)</div>
+        <div class="cp">28108 Alcobendas, Madrid</div>
+        <a class="btn-map" href="https://www.google.com/maps/search/?api=1&query=Calle+de+la+Metalurgia+8+28108+Alcobendas" target="_blank">📍 Cómo llegar</a>
+      </div>
+      <iframe class="mapa-frame"
+        src="https://www.google.com/maps?q=Calle+de+la+Metalurgia+8+28108+Alcobendas&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">CODEK TRAINING</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/codektraining" target="_blank"><svg class="ig-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.311 3.608-.975.975-2.242 1.249-3.608 1.311-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.311-.975-.975-1.249-2.242-1.311-3.608-.058-1.266-.069-1.646-.069-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.311-3.608.975-.975 2.242-1.249 3.608-1.311 1.266-.058 1.646-.069 4.85-.069zm0 1.802c-3.15 0-3.521.012-4.762.069-1.244.057-1.972.262-2.435.435-.61.235-1.043.515-1.5.972s-.737.89-.972 1.5c-.173.463-.378 1.191-.435 2.435-.057 1.241-.07 1.612-.07 4.762s.012 3.521.07 4.762c.057 1.244.262 1.972.435 2.435.235.61.515 1.043.972 1.5s.89.737 1.5.972c.463.173 1.191.378 2.435.435 1.241.057 1.612.069 4.762.069s3.521-.012 4.762-.069c1.244-.057 1.972-.262 2.435-.435.61-.235 1.043-.515 1.5-.972s.737-.89.972-1.5c.173-.463.378-1.191.435-2.435.057-1.241.069-1.612.069-4.762s-.012-3.521-.069-4.762c-.057-1.244-.262-1.972-.435-2.435-.235-.61-.515-1.043-.972-1.5s-.89-.737-1.5-.972c-.463-.173-1.191-.378-2.435-.435C15.521 3.977 15.15 3.965 12 3.965zm0 3.063A4.972 4.972 0 1 0 12 17a4.972 4.972 0 0 0 0-9.972zm0 8.197A3.225 3.225 0 1 1 12 8.776a3.225 3.225 0 0 1 0 6.449zm5.388-8.4a1.16 1.16 0 1 0 0-2.323 1.16 1.16 0 0 0 0 2.323z"/></svg>@codektraining</a>
+    <a href="https://wa.me/34681806949" target="_blank"><svg class="wa-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.465 3.488"/></svg>WhatsApp</a>
+    <a href="https://www.codektraining.com" target="_blank">🌐 Web completa</a>
+  </div>
+  <div class="footer-copy">© CODEK Training · Alcobendas, Madrid</div>
+</footer>
+
+<script>
+var SYNC_URL='https://script.google.com/macros/s/AKfycbxLrYar_Enx5Uk49uXtxi0ok87eFZaNGuMYllbAx0KlFNu8A6kaFJFUAHm1hiJ2r4SxRg/exec';
+var TOKEN='codek-9fK2mP7qX4';
+var WA='34681806949';
+
+function getId(){
+  var m=location.search.match(/[?&]id=([^&]+)/);
+  return m?decodeURIComponent(m[1]):'';
+}
+
+function waLink(opcion){
+  var msgs={
+    llamar:'Hola%21+Me+gustar%C3%ADa+que+me+llam%C3%A1rais+para+contarme+sobre+CODEK.',
+    reservar:'Hola%21+Me+gustar%C3%ADa+reservar+una+clase+de+prueba+gratis+en+CODEK.',
+    info:'Hola%21+Me+gustar%C3%ADa+m%C3%A1s+informaci%C3%B3n+sobre+los+planes+de+CODEK.'
+  };
+  return 'https://wa.me/'+WA+'?text='+(msgs[opcion]||msgs.info);
+}
+
+function elegir(opcion){
+  var id=getId();
+  // Si NO hay id (visitante normal sin link de CRM) -> WhatsApp directo
+  if(!id){
+    window.location.href=waLink(opcion);
+    return;
+  }
+  // Si HAY id (lead viene de un envio del CRM) -> registramos respuesta via JSONP
+  var btns=document.querySelectorAll('#formulario button');
+  for(var i=0;i<btns.length;i++)btns[i].disabled=true;
+  document.getElementById('cargando').style.display='block';
+
+  var thanksLabel={
+    llamar:'¡Genial! Te llamamos en cuanto podamos.',
+    reservar:'¡Perfecto! Te confirmamos enseguida un hueco para la clase de prueba.',
+    info:'¡Hecho! Te mandamos la información por WhatsApp ahora mismo.'
+  };
+
+  var cb='_cb_'+Date.now()+Math.floor(Math.random()*1000);
+  var done=false;
+  window[cb]=function(resp){
+    if(done)return;done=true;
+    try{delete window[cb];}catch(e){window[cb]=null;}
+    if(script.parentNode)script.parentNode.removeChild(script);
+    mostrarGracias(thanksLabel[opcion]||thanksLabel.info,resp&&resp.ok);
+  };
+  var script=document.createElement('script');
+  script.onerror=function(){if(!done){done=true;mostrarGracias(thanksLabel[opcion]||thanksLabel.info,false);}};
+  script.src=SYNC_URL
+    +'?token='+encodeURIComponent(TOKEN)
+    +'&action=respuesta'
+    +'&id='+encodeURIComponent(id)
+    +'&opcion='+encodeURIComponent(opcion)
+    +'&callback='+cb;
+  document.body.appendChild(script);
+  setTimeout(function(){
+    if(done)return;done=true;
+    mostrarGracias(thanksLabel[opcion]||thanksLabel.info,true);
+  },6000);
+}
+
+function mostrarGracias(msg,ok){
+  document.getElementById('cargando').style.display='none';
+  var heroForm=document.getElementById('formulario');
+  if(ok){
+    heroForm.innerHTML=
+      '<div style="background:#0f1f0f;border:1.5px solid #2a5a2a;border-radius:14px;padding:28px 22px;text-align:center">'
+      +'<div style="font-size:48px;color:#5ac96e;line-height:1;margin-bottom:10px">✓</div>'
+      +'<div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:6px">¡Gracias!</div>'
+      +'<div style="font-size:14px;color:#bbb">'+msg+'</div>'
+      +'</div>';
+  } else {
+    heroForm.innerHTML=
+      '<div style="background:#1f0f0f;border:1.5px solid #5a2a2a;border-radius:14px;padding:24px 22px;text-align:center">'
+      +'<div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">No hemos podido registrar tu respuesta</div>'
+      +'<div style="font-size:13px;color:#bbb;margin-bottom:14px">Escríbenos directamente por WhatsApp y te atendemos al momento.</div>'
+      +'<a class="btn-wa" href="https://wa.me/'+WA+'" target="_blank"><span class="wa-ico">💬</span> Abrir WhatsApp</a>'
+      +'</div>';
+  }
+}
+</script>
+</body>
+</html>
