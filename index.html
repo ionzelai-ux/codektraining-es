@@ -118,6 +118,46 @@ header{
 .hero-more-text b{color:#fff;font-weight:700}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
+/* ===== MODAL DE CALENDARIO ===== */
+.modal-cal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:200;display:none;align-items:flex-start;justify-content:center;padding:24px 14px;overflow-y:auto;animation:fadeIn .2s ease-out}
+.modal-cal-overlay.open{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-cal{background:#0f0f0f;border:1.5px solid #2a2a2a;border-radius:16px;width:100%;max-width:520px;color:#ededed;padding:22px 20px 24px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,0.6)}
+.modal-cal h3{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.25}
+.modal-cal .sub{font-size:13px;color:#999;margin-bottom:18px}
+.modal-cal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border:none;background:#1a1a1a;color:#bbb;border-radius:50%;cursor:pointer;font-size:16px;line-height:1;font-weight:700}
+.modal-cal-close:hover{background:#B23A3A;color:#fff}
+.modal-cal-back{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#888;background:none;border:none;cursor:pointer;padding:6px 0;margin-bottom:10px;font-family:inherit}
+.modal-cal-back:hover{color:#B23A3A}
+.cal-loading{text-align:center;color:#888;padding:30px 0;font-size:13px}
+.cal-dias{display:grid;grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:8px;max-height:55vh;overflow-y:auto;padding:2px}
+.cal-dia{background:#1a1a1a;border:1.5px solid #2a2a2a;border-radius:10px;padding:11px 6px;cursor:pointer;text-align:center;transition:transform .12s,border-color .15s,background .15s;font-family:inherit;color:#fff}
+.cal-dia:hover:not(:disabled){border-color:#B23A3A;background:#1f1010;transform:translateY(-2px)}
+.cal-dia .dia-name{font-size:11px;font-weight:700;color:#B23A3A;text-transform:uppercase;letter-spacing:1.2px;display:block;margin-bottom:3px}
+.cal-dia .dia-num{font-size:20px;font-weight:900;color:#fff;line-height:1;display:block}
+.cal-dia .dia-mes{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;display:block;margin-top:2px}
+.cal-dia .dia-huecos{font-size:10px;color:#5ac96e;margin-top:5px;font-weight:600;display:block}
+.cal-horas{display:grid;grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:8px;max-height:50vh;overflow-y:auto;padding:2px}
+.cal-hora{background:#1a1a1a;border:1.5px solid #2a2a2a;border-radius:10px;padding:12px 6px;cursor:pointer;text-align:center;font-family:inherit;color:#fff;transition:transform .12s,border-color .15s,background .15s}
+.cal-hora:hover:not(:disabled){border-color:#B23A3A;background:#1f1010;transform:translateY(-2px)}
+.cal-hora .hora-txt{font-size:16px;font-weight:800;display:block;line-height:1.1}
+.cal-hora .hora-plazas{font-size:10px;color:#5ac96e;display:block;margin-top:3px;font-weight:600}
+.cal-elegido{background:#1a0d10;border:1.5px solid #B23A3A;border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.cal-elegido .lbl{font-size:11px;font-weight:700;color:#B23A3A;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px}
+.cal-elegido .val{font-size:16px;font-weight:700;color:#fff}
+.cal-form{display:flex;flex-direction:column;gap:10px}
+.cal-form label{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:-4px}
+.cal-form input{background:#1a1a1a;border:1.5px solid #2a2a2a;border-radius:9px;padding:12px 14px;color:#fff;font-size:15px;font-family:inherit;transition:border-color .15s}
+.cal-form input:focus{outline:none;border-color:#B23A3A;background:#1f1010}
+.cal-form .btn-confirmar{background:#B23A3A;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:6px;transition:transform .12s,box-shadow .15s}
+.cal-form .btn-confirmar:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 22px rgba(178,58,58,0.35)}
+.cal-form .btn-confirmar:disabled{opacity:.5;cursor:default}
+.cal-error{font-size:13px;color:#ff8888;margin-top:6px;text-align:center}
+.cal-ok{text-align:center;padding:18px 0}
+.cal-ok .check{font-size:60px;color:#5ac96e;line-height:1;margin-bottom:12px;font-weight:300}
+.cal-ok h3{font-size:20px;margin-bottom:8px}
+.cal-ok p{font-size:14px;color:#bbb;line-height:1.5;max-width:380px;margin:0 auto}
+
 section{padding:70px 20px;max-width:1080px;margin:0 auto}
 .section-tag{
   display:block;font-size:11px;font-weight:700;letter-spacing:3px;color:#B23A3A;
@@ -454,8 +494,11 @@ function waLink(opcion){
 }
 
 function elegir(opcion){
+  // Llamar y Reservar -> modal calendario
+  if(opcion==='reservar'){abrirCalendario('prueba');return;}
+  if(opcion==='llamar'){abrirCalendario('llamada');return;}
+  // Info -> comportamiento de siempre (WhatsApp)
   var id=getId();
-  // Si NO hay id (visitante normal sin link de CRM) -> WhatsApp directo
   if(!id){
     window.location.href=waLink(opcion);
     return;
@@ -513,6 +556,127 @@ function mostrarGracias(msg,ok){
       +'</div>';
   }
 }
+
+// ============== CALENDARIO DE RESERVAS ==============
+var CAL = {tipo:null, huecos:[], dia:null, hora:null};
+function abrirCalendario(tipo){
+  CAL = {tipo:tipo, huecos:[], dia:null, hora:null};
+  document.getElementById('modalCal').classList.add('open');
+  pintarCal('<div class="cal-loading"><span class="spinner"></span> Buscando huecos disponibles...</div>');
+  var cb = '_calcb_'+Date.now();
+  window[cb] = function(resp){
+    try{delete window[cb];}catch(e){window[cb]=null;}
+    if(script.parentNode)script.parentNode.removeChild(script);
+    if(resp && resp.ok && resp.huecos){
+      CAL.huecos = resp.huecos;
+      pintarDias();
+    } else {
+      pintarCal('<h3>Vaya...</h3><p class="sub">No hemos podido cargar los huecos. Inténtalo de nuevo o escríbenos por WhatsApp.</p>');
+    }
+  };
+  var script = document.createElement('script');
+  script.onerror=function(){pintarCal('<h3>Vaya...</h3><p class="sub">Error de conexión. Inténtalo de nuevo.</p>');};
+  script.src = SYNC_URL+'?token='+encodeURIComponent(TOKEN)+'&action=huecos&tipo='+encodeURIComponent(tipo)+'&callback='+cb;
+  document.body.appendChild(script);
+}
+function cerrarCalendario(){document.getElementById('modalCal').classList.remove('open');}
+function pintarCal(htm){document.getElementById('modalCalBody').innerHTML=htm;}
+function diasES(){return ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];}
+function mesesES(){return ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];}
+function fmtFecha(iso){var d=new Date(iso+'T12:00:00');return {diaName:diasES()[d.getDay()], diaNum:d.getDate(), mes:mesesES()[d.getMonth()]};}
+function pintarDias(){
+  var titulo = CAL.tipo==='prueba' ? 'Reservar clase de prueba' : 'Que me llamen';
+  var sub = CAL.tipo==='prueba' ? 'Elige cuándo quieres venir a probar el centro. La prueba es gratis.' : 'Elige cuándo te viene bien que te llamemos.';
+  var porDia = {};
+  CAL.huecos.forEach(function(h){if(!porDia[h.fecha]) porDia[h.fecha] = {fecha:h.fecha, totalSlots:0};porDia[h.fecha].totalSlots++;});
+  var dias = Object.keys(porDia).sort();
+  if(!dias.length){pintarCal('<h3>'+titulo+'</h3><p class="sub">No hay huecos disponibles ahora mismo. Escríbenos por WhatsApp y te ayudamos.</p>');return;}
+  var h = '<h3>'+titulo+'</h3><p class="sub">'+sub+'</p><div class="cal-dias">';
+  dias.forEach(function(f){
+    var info=fmtFecha(f);
+    h += '<button class="cal-dia" type="button" onclick="elegirDia(\''+f+'\')">'+'<span class="dia-name">'+info.diaName+'</span><span class="dia-num">'+info.diaNum+'</span><span class="dia-mes">'+info.mes+'</span><span class="dia-huecos">'+porDia[f].totalSlots+' hueco'+(porDia[f].totalSlots!==1?'s':'')+'</span></button>';
+  });
+  h += '</div>';
+  pintarCal(h);
+}
+function elegirDia(fecha){
+  CAL.dia = fecha;
+  var horas = CAL.huecos.filter(function(h){return h.fecha===fecha;});
+  horas.sort(function(a,b){return a.hora<b.hora?-1:1;});
+  var info = fmtFecha(fecha);
+  var titulo = (CAL.tipo==='prueba' ? 'Clase de prueba' : 'Llamada') + ' · ' + info.diaName + ' ' + info.diaNum + ' ' + info.mes;
+  var h = '<button class="modal-cal-back" type="button" onclick="pintarDias()">‹ Volver a días</button>';
+  h += '<h3>'+titulo+'</h3><p class="sub">Elige la hora que mejor te venga.</p><div class="cal-horas">';
+  horas.forEach(function(hh){
+    h += '<button class="cal-hora" type="button" onclick="elegirHora(\''+hh.hora+'\')">'+'<span class="hora-txt">'+hh.hora+'</span><span class="hora-plazas">'+hh.plazas_libres+' plaza'+(hh.plazas_libres!==1?'s':'')+'</span></button>';
+  });
+  h += '</div>';
+  pintarCal(h);
+}
+function elegirHora(hora){
+  CAL.hora = hora;
+  var info = fmtFecha(CAL.dia);
+  var titulo = (CAL.tipo==='prueba' ? 'Reservar clase de prueba' : 'Reservar llamada');
+  var h = '<button class="modal-cal-back" type="button" onclick="elegirDia(\''+CAL.dia+'\')">‹ Volver a horas</button>';
+  h += '<h3>'+titulo+'</h3>';
+  h += '<div class="cal-elegido"><div class="lbl">Tu reserva</div><div class="val">'+info.diaName+' '+info.diaNum+' '+info.mes+' · '+hora+'h</div></div>';
+  h += '<form class="cal-form" onsubmit="event.preventDefault();confirmarReserva();" autocomplete="on">';
+  h += '<label for="calNombre">Nombre y apellidos</label>';
+  h += '<input id="calNombre" type="text" name="name" autocomplete="name" placeholder="Tu nombre completo" required>';
+  h += '<label for="calTel">Teléfono</label>';
+  h += '<input id="calTel" type="tel" name="tel" autocomplete="tel" placeholder="6XX XXX XXX" required minlength="9">';
+  h += '<label for="calMail">Email (opcional)</label>';
+  h += '<input id="calMail" type="email" name="email" autocomplete="email" placeholder="tu@correo.com">';
+  h += '<button type="submit" class="btn-confirmar" id="calSubmit">Confirmar reserva</button>';
+  h += '<div class="cal-error" id="calError" style="display:none"></div>';
+  h += '</form>';
+  pintarCal(h);
+  setTimeout(function(){var n=document.getElementById('calNombre');if(n)n.focus();},50);
+}
+function confirmarReserva(){
+  var nombre = (document.getElementById('calNombre').value||'').trim();
+  var tel = (document.getElementById('calTel').value||'').trim();
+  var mail = (document.getElementById('calMail').value||'').trim();
+  var err = document.getElementById('calError');
+  err.style.display='none';
+  if(!nombre || tel.replace(/\D/g,'').length<9){err.textContent='Rellena al menos nombre y teléfono válido.';err.style.display='block';return;}
+  var btn = document.getElementById('calSubmit');
+  btn.disabled=true;btn.textContent='Enviando...';
+  var cb = '_rescb_'+Date.now();
+  var done=false;
+  window[cb] = function(resp){
+    if(done)return;done=true;
+    try{delete window[cb];}catch(e){window[cb]=null;}
+    if(script.parentNode)script.parentNode.removeChild(script);
+    if(resp && resp.ok){mostrarOk();}
+    else {
+      btn.disabled=false;btn.textContent='Confirmar reserva';
+      var msg = (resp && resp.error==='sin plazas') ? 'Ese hueco se acaba de llenar. Elige otra hora.' : 'No se ha podido guardar la reserva. Inténtalo de nuevo.';
+      err.textContent=msg;err.style.display='block';
+    }
+  };
+  var script = document.createElement('script');
+  script.onerror=function(){if(done)return;done=true;btn.disabled=false;btn.textContent='Confirmar reserva';err.textContent='Error de conexión. Inténtalo de nuevo.';err.style.display='block';};
+  var url = SYNC_URL+'?token='+encodeURIComponent(TOKEN)+'&action=reservar&tipo='+encodeURIComponent(CAL.tipo)+'&fecha='+encodeURIComponent(CAL.dia)+'&hora='+encodeURIComponent(CAL.hora)+'&nombre='+encodeURIComponent(nombre)+'&tel='+encodeURIComponent(tel)+'&mail='+encodeURIComponent(mail)+'&id_lead='+encodeURIComponent(getId()||'')+'&callback='+cb;
+  script.src=url;
+  document.body.appendChild(script);
+  setTimeout(function(){if(done)return;done=true;btn.disabled=false;btn.textContent='Confirmar reserva';err.textContent='El servidor tarda demasiado. Vuelve a probar.';err.style.display='block';},10000);
+}
+function mostrarOk(){
+  var info = fmtFecha(CAL.dia);
+  var what = CAL.tipo==='prueba' ? 'tu clase de prueba' : 'tu llamada';
+  var detalle = CAL.tipo==='prueba' ? 'Te esperamos en la calle Metalurgia 8 (posterior), Alcobendas. Ven con ropa cómoda y una botella de agua.' : 'Te llamaremos a la hora que has elegido. Si necesitas cambiarlo, escríbenos por WhatsApp.';
+  pintarCal('<div class="cal-ok"><div class="check">✓</div><h3>¡Reserva confirmada!</h3><p>Hemos guardado '+what+' para el <b>'+info.diaName+' '+info.diaNum+' '+info.mes+' a las '+CAL.hora+'</b>. '+detalle+'</p></div>');
+}
+document.addEventListener('click',function(e){if(e.target===document.getElementById('modalCal'))cerrarCalendario();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')cerrarCalendario();});
+
 </script>
+<div class="modal-cal-overlay" id="modalCal">
+  <div class="modal-cal">
+    <button class="modal-cal-close" onclick="cerrarCalendario()" aria-label="Cerrar">×</button>
+    <div id="modalCalBody"></div>
+  </div>
+</div>
 </body>
 </html>
