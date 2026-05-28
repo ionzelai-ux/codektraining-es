@@ -498,6 +498,41 @@ function getId(){
   return m?decodeURIComponent(m[1]):'';
 }
 
+// Datos del lead pre-cargados (autocompletar formulario de reserva)
+var LEAD_DATA = {nombre:'', tel:'', mail:'', loaded:false};
+function cargarLead(){
+  var id = getId();
+  if(!id) return;
+  var cb = '_lead_'+Date.now();
+  window[cb] = function(resp){
+    try{delete window[cb];}catch(e){window[cb]=null;}
+    if(script.parentNode)script.parentNode.removeChild(script);
+    if(resp && resp.ok && resp.lead){
+      LEAD_DATA.nombre = resp.lead.nombre || '';
+      LEAD_DATA.tel = resp.lead.tel || '';
+      LEAD_DATA.mail = resp.lead.mail || '';
+      LEAD_DATA.loaded = true;
+      // Si el formulario ya esta visible, pre-rellenarlo ya
+      var n=document.getElementById('calNombre');
+      if(n) aplicarLeadAlForm();
+    }
+  };
+  var script = document.createElement('script');
+  script.onerror = function(){try{delete window[cb];}catch(e){window[cb]=null;}};
+  script.src = SYNC_URL+'?token='+encodeURIComponent(TOKEN)+'&action=lead&id='+encodeURIComponent(id)+'&callback='+cb;
+  document.body.appendChild(script);
+}
+function aplicarLeadAlForm(){
+  var n=document.getElementById('calNombre');
+  var t=document.getElementById('calTel');
+  var m=document.getElementById('calMail');
+  if(n && !n.value && LEAD_DATA.nombre) n.value = LEAD_DATA.nombre;
+  if(t && !t.value && LEAD_DATA.tel) t.value = LEAD_DATA.tel;
+  if(m && !m.value && LEAD_DATA.mail) m.value = LEAD_DATA.mail;
+}
+// Al cargar la pagina, si hay ?id=, precargar los datos
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',cargarLead);}else{cargarLead();}
+
 function waLink(opcion){
   var msgs={
     llamar:'Hola%21+Me+gustar%C3%ADa+que+me+llam%C3%A1rais+para+contarme+sobre+CODEK.',
@@ -645,7 +680,11 @@ function elegirHora(hora){
   h += '<div class="cal-error" id="calError" style="display:none"></div>';
   h += '</form>';
   pintarCal(h);
-  setTimeout(function(){var n=document.getElementById('calNombre');if(n)n.focus();},50);
+  setTimeout(function(){
+    if(LEAD_DATA.loaded) aplicarLeadAlForm();
+    var n=document.getElementById('calNombre');
+    if(n){ if(n.value){ var t=document.getElementById('calTel'); if(t && !t.focus)t.focus(); } else { n.focus(); } }
+  },50);
 }
 function confirmarReserva(){
   var nombre = (document.getElementById('calNombre').value||'').trim();
